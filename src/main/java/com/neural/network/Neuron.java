@@ -30,8 +30,8 @@ public class Neuron {
         activation = activationFunction.activationValue(z) + bias;
     }
 
-    public double getZ() {
-        return z;
+    public double getZDerivative() {
+        return activationFunction.activationDerivativeValue(z);
     }
 
     public double getActivation() {

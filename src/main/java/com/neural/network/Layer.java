@@ -1,5 +1,6 @@
 package com.neural.network;
 
+import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
 import java.util.ArrayList;
@@ -15,6 +16,17 @@ public class Layer {
     }
 
     private RealVector activations;
+
+    public RealVector getDerivativesOfZ() {
+        RealVector derivatives = new ArrayRealVector(neurons.size());
+
+        for (int i = 0; i < neurons.size(); i++) {
+            derivatives.setEntry(i, neurons.get(i).getZDerivative());
+        }
+        return derivatives;
+    }
+
+    private RealVector z;
 
     public Layer(IActivationFunction activationFunction, int numberOfNeurons, boolean ifBiasIsUsed, int previousLayerDimension) {
         neurons = new ArrayList<Neuron>(numberOfNeurons);

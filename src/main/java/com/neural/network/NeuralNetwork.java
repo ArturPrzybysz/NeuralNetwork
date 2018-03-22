@@ -12,6 +12,17 @@ public class NeuralNetwork {
     private int inputSize;
     private int outputSize;
 
+//    public RealVector calculateError(RealVector nextLayersError, int layersIndex) {
+//        nextLayersError.tra
+//    }
+
+    public RealVector calculateOutputError(RealVector expectedOutput) {
+        RealVector vector1 = layers.get(layers.size() - 1).getActivationVector().subtract(expectedOutput);
+        RealVector vector2 = layers.get(layers.size() - 1).getDerivativesOfZ();
+
+        return vector1.ebeMultiply(vector2);
+    }
+
     public void updateAllActivationLayers(RealVector input) {
         layers.get(0).updateActivationValues(input);
 
