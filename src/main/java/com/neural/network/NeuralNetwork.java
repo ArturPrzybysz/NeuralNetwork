@@ -1,7 +1,5 @@
 package com.neural.network;
 
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import java.util.List;
@@ -12,9 +10,9 @@ public class NeuralNetwork {
     private int inputSize;
     private int outputSize;
 
-//    public RealVector calculateError(RealVector nextLayersError, int layersIndex) {
-//        nextLayersError.tra
-//    }
+    public RealVector calculateError(RealVector nextLayersError, int layersIndex) {
+        nextLayersError.tra
+    }
 
     public RealVector calculateOutputError(RealVector expectedOutput) {
         RealVector vector1 = layers.get(layers.size() - 1).getActivationVector().subtract(expectedOutput);
