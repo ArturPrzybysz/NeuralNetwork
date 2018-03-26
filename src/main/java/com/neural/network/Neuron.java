@@ -1,7 +1,7 @@
 package com.neural.network;
 
+import com.neural.network.activationFunction.IActivationFunction;
 import com.neural.network.utils.MathUtils;
-import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
 public class Neuron {
@@ -26,8 +26,18 @@ public class Neuron {
     }
 
     public void updateActivationValues(RealVector input) {
+        System.out.println("input " + input);
+        System.out.println("weights " + weights);
+
+        System.out.println(weights);
         z = weights.dotProduct(input);
+        System.out.println(weights);
+
         activation = activationFunction.activationValue(z) + bias;
+    }
+
+    public RealVector getWeights() {
+        return weights;
     }
 
     public double getZDerivative() {

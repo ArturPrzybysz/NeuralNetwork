@@ -1,4 +1,4 @@
-package com.neural.network;
+package com.neural.network.activationFunction;
 
 import org.apache.commons.math3.linear.RealVector;
 

@@ -8,7 +8,8 @@ public class MathUtils {
         ArrayRealVector vector = new ArrayRealVector(vectorSize);
 
         for (int i = 0; i < vectorSize; i++) {
-            vector.setEntry(i, Math.random() * 2 - 1);
+            vector.setEntry(i, Math.random());
+            System.out.println(vector.getEntry(i));
         }
         return vector;
     }

@@ -1,5 +1,6 @@
 package com.neural.network;
 
+import com.neural.network.activationFunction.IActivationFunction;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
@@ -29,6 +30,7 @@ public class Layer {
     private RealVector z;
 
     public Layer(IActivationFunction activationFunction, int numberOfNeurons, boolean ifBiasIsUsed, int previousLayerDimension) {
+        activations = new ArrayRealVector(numberOfNeurons);
         neurons = new ArrayList<Neuron>(numberOfNeurons);
         for (int i = 0; i < numberOfNeurons; i++) {
             neurons.add(i, new Neuron(activationFunction, ifBiasIsUsed, previousLayerDimension));
@@ -39,6 +41,10 @@ public class Layer {
         for (Neuron n : neurons) {
             n.updateActivationValues(input);
         }
+    }
+
+    public Neuron getNeuron(int number) {
+        return neurons.get(number);
     }
 
 

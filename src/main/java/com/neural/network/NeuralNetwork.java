@@ -1,7 +1,10 @@
 package com.neural.network;
 
+import com.neural.network.activationFunction.IActivationFunction;
+import com.sun.istack.internal.NotNull;
 import org.apache.commons.math3.linear.RealVector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NeuralNetwork {
@@ -11,7 +14,8 @@ public class NeuralNetwork {
     private int outputSize;
 
     public RealVector calculateError(RealVector nextLayersError, int layersIndex) {
-        nextLayersError.tra
+//        nextLayersError.tra
+        return null;
     }
 
     public RealVector calculateOutputError(RealVector expectedOutput) {
@@ -29,12 +33,33 @@ public class NeuralNetwork {
         }
     }
 
-    public NeuralNetwork(List<Integer> neuronsPerLayers, List<IActivationFunction> activationFunctions, List<Boolean> ifLayerUsesBias, int inputSize) {
-        layers.add(new Layer(activationFunctions.get(0), neuronsPerLayers.get(0), ifLayerUsesBias.get(0), inputSize));
+    public NeuralNetwork(@NotNull List<Integer> neuronsPerLayers,
+                         @NotNull List<IActivationFunction> activationFunctions,
+                         @NotNull List<Boolean> ifLayerUsesBias,
+                         int inputSize) {
 
-        for (int i = 1; i < neuronsPerLayers.size(); i++) {
-            layers.add(new Layer(activationFunctions.get(i), neuronsPerLayers.get(i), ifLayerUsesBias.get(i), neuronsPerLayers.get(i - 1)));
+        System.out.println(neuronsPerLayers);
+        System.out.println(activationFunctions);
+        System.out.println(ifLayerUsesBias);
+        layers = new ArrayList<Layer>();
+        // TODO TUTAJ JEST BŁĄD, MA BYĆ ODWROTNA KOLEJNOSC DODAWANIA
+        layers.add(
+                new Layer(
+                        activationFunctions.get(0),
+                        neuronsPerLayers.get(0),
+                        ifLayerUsesBias.get(0),
+                        inputSize));
+
+        if (neuronsPerLayers.size() >= 1) {
+            for (int i = 1; i < neuronsPerLayers.size(); i++) {
+                layers.add(new Layer(
+                        activationFunctions.get(i),
+                        neuronsPerLayers.get(i),
+                        ifLayerUsesBias.get(i),
+                        neuronsPerLayers.get(i - 1)));
+            }
         }
+
 
         this.inputSize = inputSize;
         this.outputSize = layers.get(layers.size() - 1).getActivationVector().getDimension();
@@ -55,6 +80,22 @@ public class NeuralNetwork {
 
     public int getOutputSize() {
         return outputSize;
+    }
+
+    public void showActivationValues() {
+        for (int i = 0; i < layers.size(); i++) {
+            System.out.print("Layer nr " + i + "\n");
+            System.out.println(layers.get(i).getActivationVector());
+        }
+    }
+
+    public void showWeightValues() {
+        for (int l = 0; l < layers.size(); l++) {
+            System.out.println("Layer: " + l + " weights:");
+            for (int j = 0; j < layers.get(l).getActivationVector().getDimension(); j++) {
+                System.out.println(layers.get(l).getNeuron(j).getWeights());
+            }
+        }
     }
 
 }

@@ -19,9 +19,9 @@ public class Backpropagation {
         List<RealVector> errors = new ArrayList<RealVector>();
         errors.add(neuralNetwork.calculateOutputError(desiredOutput));
 
-        for (int i = 1; i < neuralNetwork.getLayers().size(); i++) {
-            errors.add(i, neuralNetwork.calculateError(errors.get(i - 1), ));
-        }
+//        for (int i = 1; i < neuralNetwork.getLayers().size(); i++) {
+//            errors.add(i, neuralNetwork.calculateError(errors.get(i - 1), ));
+//        }
 
         // Gradient descent
 
