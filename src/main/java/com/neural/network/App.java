@@ -20,14 +20,12 @@ public class App {
                 new ArrayList<Integer>(Arrays.asList(neuronsPerLayer)),
                 new ArrayList<IActivationFunction>(Arrays.asList(activationFunctions)),
                 new ArrayList<Boolean>(Arrays.asList(ifLayerUsesBias)),
-                1
+                2
         );
-        neuralNetwork.showActivationValues();
-        neuralNetwork.showWeightValues();
 
         double input[] = {1, 2};
         neuralNetwork.updateAllActivationLayers(new ArrayRealVector(input));
-
+        System.out.println("aktywacja");
         neuralNetwork.showActivationValues();
     }
 }

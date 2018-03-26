@@ -38,8 +38,8 @@ public class Layer {
     }
 
     public void updateActivationValues(RealVector input) {
-        for (Neuron n : neurons) {
-            n.updateActivationValues(input);
+        for (int i = 0; i < neurons.size(); i++) {
+            neurons.get(i).updateActivationValues(input);
         }
     }
 

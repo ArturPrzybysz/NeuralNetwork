@@ -29,6 +29,7 @@ public class NeuralNetwork {
         layers.get(0).updateActivationValues(input);
 
         for (int i = 1; i < layers.size(); i++) {
+            System.out.println(layers.get(i - 1));
             layers.get(i).updateActivationValues(layers.get(i - 1).getActivationVector());
         }
     }
@@ -38,11 +39,7 @@ public class NeuralNetwork {
                          @NotNull List<Boolean> ifLayerUsesBias,
                          int inputSize) {
 
-        System.out.println(neuronsPerLayers);
-        System.out.println(activationFunctions);
-        System.out.println(ifLayerUsesBias);
         layers = new ArrayList<Layer>();
-        // TODO TUTAJ JEST BŁĄD, MA BYĆ ODWROTNA KOLEJNOSC DODAWANIA
         layers.add(
                 new Layer(
                         activationFunctions.get(0),
@@ -59,7 +56,6 @@ public class NeuralNetwork {
                         neuronsPerLayers.get(i - 1)));
             }
         }
-
 
         this.inputSize = inputSize;
         this.outputSize = layers.get(layers.size() - 1).getActivationVector().getDimension();
