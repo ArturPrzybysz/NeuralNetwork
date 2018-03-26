@@ -60,9 +60,9 @@ public class NeuralNetwork {
         }
     }
 
-    public NeuralNetwork(@NotNull List<Integer> neuronsPerLayers,
-                         @NotNull List<IActivationFunction> activationFunctions,
-                         @NotNull List<Boolean> ifLayerUsesBias,
+    public NeuralNetwork(List<Integer> neuronsPerLayers,
+                         List<IActivationFunction> activationFunctions,
+                         List<Boolean> ifLayerUsesBias,
                          int inputSize) {
 
         layers = new ArrayList<Layer>();
