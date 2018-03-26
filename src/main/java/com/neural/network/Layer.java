@@ -1,7 +1,9 @@
 package com.neural.network;
 
 import com.neural.network.activationFunction.IActivationFunction;
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import java.util.ArrayList;
@@ -9,24 +11,8 @@ import java.util.List;
 
 public class Layer {
     private List<Neuron> neurons;
-
     private boolean isBiasUsed;
-
-    public RealVector getActivationVector() {
-        return activations;
-    }
-
     private RealVector activations;
-
-    public RealVector getDerivativesOfZ() {
-        RealVector derivatives = new ArrayRealVector(neurons.size());
-
-        for (int i = 0; i < neurons.size(); i++) {
-            derivatives.setEntry(i, neurons.get(i).getZDerivative());
-        }
-        return derivatives;
-    }
-
     private RealVector z;
 
     public Layer(IActivationFunction activationFunction, int numberOfNeurons, boolean ifBiasIsUsed, int previousLayerDimension) {
@@ -37,15 +23,34 @@ public class Layer {
         }
     }
 
+    public RealVector getActivationVector() {
+        return activations;
+    }
+
+    public RealVector getDerivativesOfZ() {
+        RealVector derivatives = new ArrayRealVector(neurons.size());
+        for (int i = 0; i < neurons.size(); i++) {
+            derivatives.setEntry(i, neurons.get(i).getZDerivative());
+        }
+        return derivatives;
+    }
+
+    public RealMatrix getWeightMatrix() {
+        RealMatrix weights = new Array2DRowRealMatrix().createMatrix(neurons.get(0).getWeights().getDimension(), neurons.size());
+        for (int i = 0; i < neurons.size(); i++) {
+            weights.setColumnVector(i, neurons.get(i).getWeights());
+        }
+        return weights;
+    }
+
     public void updateActivationValues(RealVector input) {
         for (int i = 0; i < neurons.size(); i++) {
             neurons.get(i).updateActivationValues(input);
+            activations.setEntry(i, neurons.get(i).getActivation());
         }
     }
 
     public Neuron getNeuron(int number) {
         return neurons.get(number);
     }
-
-
 }

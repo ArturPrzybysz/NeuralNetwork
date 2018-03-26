@@ -9,7 +9,6 @@ public class MathUtils {
 
         for (int i = 0; i < vectorSize; i++) {
             vector.setEntry(i, Math.random());
-            System.out.println(vector.getEntry(i));
         }
         return vector;
     }

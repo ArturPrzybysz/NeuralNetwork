@@ -2,6 +2,8 @@ package com.neural.network;
 
 import com.neural.network.activationFunction.IActivationFunction;
 import com.sun.istack.internal.NotNull;
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import java.util.ArrayList;
@@ -13,12 +15,37 @@ public class NeuralNetwork {
     private int inputSize;
     private int outputSize;
 
-    public RealVector calculateError(RealVector nextLayersError, int layersIndex) {
-//        nextLayersError.tra
-        return null;
+    public List<RealVector> calculateErrors(RealVector expectedOutput) {
+        /// CALCULATE OUTPUT ERROR
+        int listSize = layers.size();
+        List<RealVector> errorVector = new ArrayList<RealVector>(listSize);
+
+        while (errorVector.size() < listSize) { // forced by the difference between lists length and capacity in java
+            errorVector.add(new ArrayRealVector());
+        }
+        errorVector.set(listSize - 1, calculateOutputError(expectedOutput));
+
+        /// BACKPROPAGATE ERROR
+        if (listSize >= 1) {
+            for (int layerIndex = listSize - 2; layerIndex >= 0; layerIndex--) {
+                errorVector.set(layerIndex, calculateErrorInInnerLayer(layerIndex, errorVector));
+            }
+        }
+
+        return errorVector;
     }
 
-    public RealVector calculateOutputError(RealVector expectedOutput) {
+    private RealVector calculateErrorInInnerLayer(int layerIndex, List<RealVector> errorVector) {
+        RealMatrix weights = layers.get(layerIndex + 1).getWeightMatrix();
+        RealVector errors = errorVector.get(layerIndex + 1);
+
+        RealVector xd = weights.operate((errors));
+        RealVector derivativesOfZ = layers.get(layerIndex).getDerivativesOfZ();
+
+        return xd.ebeMultiply(derivativesOfZ);
+    }
+
+    private RealVector calculateOutputError(RealVector expectedOutput) {
         RealVector vector1 = layers.get(layers.size() - 1).getActivationVector().subtract(expectedOutput);
         RealVector vector2 = layers.get(layers.size() - 1).getDerivativesOfZ();
 
@@ -29,7 +56,6 @@ public class NeuralNetwork {
         layers.get(0).updateActivationValues(input);
 
         for (int i = 1; i < layers.size(); i++) {
-            System.out.println(layers.get(i - 1));
             layers.get(i).updateActivationValues(layers.get(i - 1).getActivationVector());
         }
     }
