@@ -7,9 +7,15 @@ import org.apache.commons.math3.linear.RealVector;
 public class Neuron {
     private IActivationFunction activationFunction;
     private RealVector weights;
-    boolean ifBiasIsUsed;
+    private boolean ifBiasIsUsed;
     private double z;
     private double activation;
+
+    public void updateWeightValues(double error, RealVector previousLayerActivations, double learningRate) {
+        for (int i = 0; i < weights.getDimension(); i++) {
+            weights.setEntry(i, weights.getEntry(i) + learningRate * previousLayerActivations.getEntry(i) * error);
+        }
+    }
 
     public Neuron(IActivationFunction activationFunction, boolean ifBiasIsUsed, int previousLayerDimension) {
         this.activationFunction = activationFunction;

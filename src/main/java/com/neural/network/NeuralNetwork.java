@@ -71,7 +71,8 @@ public class NeuralNetwork {
                         activationFunctions.get(0),
                         neuronsPerLayers.get(0),
                         ifLayerUsesBias.get(0),
-                        inputSize));
+                        inputSize
+                ));
 
         if (neuronsPerLayers.size() >= 1) {
             for (int i = 1; i < neuronsPerLayers.size(); i++) {
@@ -79,7 +80,8 @@ public class NeuralNetwork {
                         activationFunctions.get(i),
                         neuronsPerLayers.get(i),
                         ifLayerUsesBias.get(i),
-                        neuronsPerLayers.get(i - 1)));
+                        neuronsPerLayers.get(i - 1)
+                ));
             }
         }
 
@@ -120,4 +122,9 @@ public class NeuralNetwork {
         }
     }
 
+    public void updateWeightVectors(List<RealVector> errors) {
+        for (int i = 0; i < layers.size(); i++) {
+            layers.get(i).updateWeightValues(errors.get(i));
+        }
+    }
 }

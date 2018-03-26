@@ -10,16 +10,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Layer {
+    private Layer previousLayer;
+    private Layer nextLayer;
+
     private List<Neuron> neurons;
     private boolean isBiasUsed;
     private RealVector activations;
     private RealVector z;
 
-    public Layer(IActivationFunction activationFunction, int numberOfNeurons, boolean ifBiasIsUsed, int previousLayerDimension) {
+    public Layer(IActivationFunction activationFunction, int numberOfNeurons, boolean ifBiasIsUsed,
+                 int previousLayerDimension, Layer previousLayer, Layer nextLayer) {
+        this.previousLayer = previousLayer;
+        this.nextLayer = nextLayer;
+
         activations = new ArrayRealVector(numberOfNeurons);
         neurons = new ArrayList<Neuron>(numberOfNeurons);
         for (int i = 0; i < numberOfNeurons; i++) {
             neurons.add(i, new Neuron(activationFunction, ifBiasIsUsed, previousLayerDimension));
+        }
+    }
+
+    public void updateWeightValues(RealVector errors, double learningRate) {
+        for (int i = 0; i < neurons.size(); i++) {
+            neurons.get(i).updateWeightValues(errors.getEntry(i), previousLayer.activations, learningRate);
         }
     }
 
